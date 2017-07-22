@@ -13,7 +13,11 @@ end)
 -- Event before player leave
 AddEventHandler('playerDropped', function()
 
-  TriggerEvent("ft_gamemode:SvSetPlayerData", source, Players[source])
-  Players[source] = nil
+  if Players[source] ~= nil then
+
+    TriggerEvent("ft_gamemode:SvSetPlayerData", source, Players[source])
+    Players[source] = nil
+
+  end
 
 end)
