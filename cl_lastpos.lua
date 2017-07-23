@@ -36,13 +36,18 @@ Citizen.CreateThread(function()
     local player = GetPlayerPed(-1)
     local lastPos = GetEntityCoords(player, true)
     local heading = GetEntityHeading(player)
+    
+    local PosX = lastPos.x
+    local PosY = lastPos.y
+    local PosZ = lastPos.z
+ 
     local data = {
-      posX = lastPos.x,
-      posY = lastPos.y,
-      posZ = LastPos.z,
+      posX = PosX,
+      posY = PosY,
+      posZ = PosZ,
       heading = heading,
     }
-
+    
     TriggerServerEvent("ft_laspos:pos", data)
 	end
 
