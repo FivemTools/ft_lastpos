@@ -11,14 +11,24 @@ AddEventHandler('ft_gamemode:ClReady', function()
   posY = player.posY or 0
   posZ = player.posZ or 0
   heading = player.heading or 0
-
-  exports.spawnmanager:spawnPlayer({x = posX, y = posY, z = posZ, heading = heading, model = GetHashKey(Config.defaultModel)})
-  print("send")
-
+  
+  if tonumber(player.posX) ~= 0 then
+    spawnPlayer(posX, posY, posZ, heading, model = Config.defaultModel)
+  else
+    spawnPlayer(Config.defaultPos.x, Config.defaultPos.y, Config.defaultPos.z, Config.defaultPos.head, model = Config.defaultModel)
+  end
+  
 end)
 
---
-Citizen.CreateThread(function ()
+function spawnPlayer(x, y, z, heading, model)
+  Citizen.CreateThread(function()
+
+    exports.spawnmanager:spawnPlayer({x = x, y = y, z = z, heading = heading, model = GetHashKey(model)})
+    
+  end)
+end
+
+Citizen.CreateThread(function()
 
 	while true do
     Citizen.Wait(60000 * Config.sendPos)
