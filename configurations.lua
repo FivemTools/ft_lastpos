@@ -3,8 +3,9 @@
 
 Config = {
   
-  firstSpawn = { x = 197.6794128418, y = -995.08081054688, z = 30.091907501221, head = 30.12971496582 }, -- Setting up a default position when a new player join the city.
-  defaultModel = "mp_m_freemode_01", -- Mutiplayer model
+  firstSpawn = { x = -211.19515991211, y = -1009.8160400391, z = 29.214820861816, head = 242.29602 }, -- Setting up a default position when a new player join the city.
+  defaultModelH = "mp_m_freemode_01", -- Mutiplayer model homme
+  defaultModelF = "mp_f_freemode_01", -- Mutiplayer model femme
   sendPos = 1, -- 1 minute
 
 }

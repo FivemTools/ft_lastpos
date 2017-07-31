@@ -12,6 +12,7 @@ client_scripts {
 
 server_scripts {
 
+  "@mysql-async/lib/MySQL.lua", -- Load mysql-async
   "configurations.lua",
   "sv_lastpos.lua",
 

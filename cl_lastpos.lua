@@ -6,24 +6,46 @@ RegisterNetEvent('ft_gamemode:ClReady')
 AddEventHandler('ft_gamemode:ClReady', function()
 
   local player = exports.ft_gamemode:GetPlayerData()
-
-  posX = tonumber(player.posX) or 0
-  posY = tonumber(player.posY) or 0
-  posZ = tonumber(player.posZ) or 0
-  heading = tonumber(player.heading) or 0
+	
+  posX = tonumber(player.posX)
+  posY = tonumber(player.posY)
+  posZ = tonumber(player.posZ)
+  heading = tonumber(player.heading)
+  genre = player.genre
+	
+	if genre == "h" then
+		model = Config.defaultModelH
+	else
+		model = Config.defaultModelF
+	end
 
   if posX ~= 0 then
-    spawnPlayer(posX, posY, posZ, heading, model = Config.defaultModel)
+    spawnPlayer(posX, posY, posZ, heading, model)
   else
-    spawnPlayer(Config.defaultPos.x, Config.defaultPos.y, Config.defaultPos.z, Config.defaultPos.head, model = Config.defaultModel)
+	posX = Config.firstSpawn.x
+	posY = Config.firstSpawn.y
+	posZ = Config.firstSpawn.z
+	heading = Config.firstSpawn.head
+  
+    spawnPlayer(posX, posY, posZ, heading, model)
   end
   
 end)
 
-function spawnPlayer(x, y, z, heading, model)
+function spawnPlayer(posX, posY, posZ, heading, model)
   Citizen.CreateThread(function()
-
-    exports.spawnmanager:spawnPlayer({x = x, y = y, z = z, heading = heading, model = GetHashKey(model)})
+  
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        RequestModel(model)
+        Wait(0)
+    end
+    SetPlayerModel(PlayerId(), model)
+    SetModelAsNoLongerNeeded(model)
+    SetPedDefaultComponentVariation(GetPlayerPed(-1))
+    SetPedComponentVariation(GetPlayerPed(-1), 2, 0, 0, 0)
+	
+    exports.spawnmanager:spawnPlayer({x = posX, y = posY, z = posZ, heading = heading})
     
   end)
 end
@@ -32,7 +54,6 @@ Citizen.CreateThread(function()
 
 	while true do
     Citizen.Wait(60000 * Config.sendPos)
-
     local player = GetPlayerPed(-1)
     local lastPos = GetEntityCoords(player, true)
     local heading = GetEntityHeading(player)
