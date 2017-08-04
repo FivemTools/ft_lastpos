@@ -1,6 +1,5 @@
 -- @Project: FiveM Tools
 -- @License: GNU General Public License v3.0
---require "resources/mysql-async/lib/MySQL"
 
 Players = {}
 
